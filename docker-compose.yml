@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  master:
+    hostname: master
+    image: chetansurwade/spark-alpine
+    command: ["/usr/bin/supervisord", "--configuration=/opt/conf/master.conf"]
+    ports:
+      - "127.0.0.1:4040:4040"
+      - "127.0.0.1:6066:6066"
+      - "127.0.0.1:7077:7077"
+      - "127.0.0.1:8090:8080"
+      - "127.0.0.1:10000:10000"
+
+  worker:
+    hostname: worker
+    image: chetansurwade/spark-alpine
+    command: ["/usr/bin/supervisord", "--configuration=/opt/conf/slave.conf"]
+    ports:
+      - "8081:8081"
+    links:
+      - master
+  zeppelin:
+    hostname: zepplin
+    image: chetansurwade/zeppelin
+    command: ["/usr/bin/supervisord", "--configuration=/zeppelin/zeppelin.conf"]
+    ports:
+      - "127.0.0.1:8080:8080"
+    links:
+      - master
