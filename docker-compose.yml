@@ -20,11 +20,3 @@ services:
       - "8081:8081"
     links:
       - master
-  zeppelin:
-    hostname: zepplin
-    image: chetansurwade/zeppelin
-    command: ["/usr/bin/supervisord", "--configuration=/zeppelin/zeppelin.conf"]
-    ports:
-      - "127.0.0.1:8080:8080"
-    links:
-      - master
